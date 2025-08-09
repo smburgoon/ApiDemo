@@ -26,3 +26,12 @@ which should trigger the bottom right popup to "load maven project"
 
 https://github.com/awslabs/amazon-dynamodb-local-samples/tree/main
 
+`docker run -d -p 8000:8000 amazon/dynamodb-local`
+
+appears to start a container managed via Docker Desktop, neat
+
+
+
+# Docker compose
+
+`docker-compose up --build`

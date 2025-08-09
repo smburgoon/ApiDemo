@@ -1,6 +1,7 @@
 package com.example.petstore.controller;
 
 import com.example.petstore.exception.PetNotFoundException;
+import com.example.petstore.model.DynamoDBPet;
 import com.example.petstore.model.Pet;
 import com.example.petstore.service.PetService;
 import jakarta.validation.Valid;
@@ -20,15 +21,28 @@ public class PetController {
         this.petService = petService;
     }
 
+//    @GetMapping
+//    public List<Pet> getAllPets() {
+//        return petService.getAllPets();
+//    }
+
     @GetMapping
-    public List<Pet> getAllPets() {
+    public List<DynamoDBPet> getAllPets() {
         return petService.getAllPets();
     }
 
+//    @GetMapping("/{id}")
+//    public Pet getPetById(@PathVariable Long id) {
+//        return petService.getPetById(id);
+//    }
+
     @GetMapping("/{id}")
-    public Pet getPetById(@PathVariable Long id) {
-        return petService.getPetById(id);
+    public ResponseEntity<DynamoDBPet> getPet(@PathVariable String id) {
+        return petService.getPetById(id)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new PetNotFoundException("Pet not found with id: " + id));
     }
+
 
 //    @GetMapping("/{id}")
 //    public ResponseEntity<Pet> getPet(@PathVariable String id) {
