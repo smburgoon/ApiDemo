@@ -30,8 +30,25 @@ https://github.com/awslabs/amazon-dynamodb-local-samples/tree/main
 
 appears to start a container managed via Docker Desktop, neat
 
+# Docker
 
+`mvn clean package`
+`docker build -t petapp:local .`
+`docker run -d --name dynamodb-local -p 8000:8000 amazon/dynamodb-local`
+
+```
+docker run -p 8080:8080 \
+  --name petapp \
+  --env DYNAMODB_ENDPOINT=http://host.docker.internal:8000 \
+  petapp:local
+
+```
 
 # Docker compose
 
 `docker-compose up --build`
+
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html
+
+
+https://github.com/aws-samples/aws-sam-java-rest

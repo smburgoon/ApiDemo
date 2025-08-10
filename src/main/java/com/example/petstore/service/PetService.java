@@ -7,12 +7,12 @@ import com.example.petstore.repository.PetRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
+//import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class PetService {
-    private final Map<Long, Pet> pets = new HashMap<>();
-    private final AtomicLong idCounter = new AtomicLong(1);
+//    private final Map<Long, Pet> pets = new HashMap<>();
+//    private final AtomicLong idCounter = new AtomicLong(1);
 
     private final PetRepository petRepository;
 
@@ -28,22 +28,34 @@ public class PetService {
         return new ArrayList<>(petRepository.findAll());
     }
 
-    public Pet getPetById(Long id) {
-        return pets.get(id);
-    }
+//    public Pet getPetById(Long id) {
+//        return pets.get(id);
+//    }
 
     public Optional<DynamoDBPet> getPetById(String id) {
         return petRepository.findById(id);
     }
 
+//    public Optional<DynamoDBPet> updatePet(String id, Pet pet) {
+//        if(petRepository.findById(id).isPresent()) {
+//
+//        }else {
+//
+//        }
+//    }
 
-    public Pet addPet(Pet pet) {
+    public void deletePet(String id) {
+        petRepository.deleteById(id);
+    }
+
+    public DynamoDBPet addPet(Pet pet) {
         DynamoDBPet dynamoDBPet = validatePet(pet);
-        long newId = idCounter.getAndIncrement();
-        pet.setId(newId);
-        pets.put(pet.getId(), pet);
-        petRepository.save(dynamoDBPet);
-        return pet;
+//        long newId = idCounter.getAndIncrement();
+//        pet.setId(newId);
+//        pets.put(pet.getId(), pet);
+        String id = petRepository.save(dynamoDBPet);
+        dynamoDBPet.setId(id);
+        return dynamoDBPet;
     }
 
     private DynamoDBPet validatePet(Pet pet) {

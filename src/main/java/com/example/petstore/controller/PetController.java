@@ -31,6 +31,20 @@ public class PetController {
         return petService.getAllPets();
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePetById(@PathVariable String id) {
+        petService.deletePet(id);
+        return new ResponseEntity<>("Pet deleted successfully", HttpStatus.NO_CONTENT);
+    }
+
+//    @PutMapping("/{id}")
+//    public ResponseEntity<DynamoDBPet> updatePetById(@PathVariable String id, @Valid @RequestBody Pet pet) {
+//        return petService.getPetById(id)
+//                .map(petService.updatePet(id, pet))
+//                .map(ResponseEntity::ok)
+//                .orElseThrow(() -> new PetNotFoundException("Pet not found with id: " + id));
+//    }
+
 //    @GetMapping("/{id}")
 //    public Pet getPetById(@PathVariable Long id) {
 //        return petService.getPetById(id);
@@ -66,7 +80,7 @@ public class PetController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Pet addPet(@Valid @RequestBody Pet pet) {
+    public DynamoDBPet addPet(@Valid @RequestBody Pet pet) {
         return petService.addPet(pet);
     }
 

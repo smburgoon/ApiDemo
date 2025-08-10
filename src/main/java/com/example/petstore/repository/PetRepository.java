@@ -40,9 +40,11 @@ public class PetRepository {
     }
 
 
-    public void save(DynamoDBPet pet) {
-        pet.setId(UUID.randomUUID().toString());
+    public String save(DynamoDBPet pet) {
+        String id = UUID.randomUUID().toString();
+        pet.setId(id);
         petTable.putItem(pet);
+        return id;
     }
 
     public Optional<DynamoDBPet> findById(String id) {
