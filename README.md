@@ -32,6 +32,11 @@ appears to start a container managed via Docker Desktop, neat
 
 # Docker
 
+> NOTE: when an app runs as a docker containerized app, its 'localhost' is internal to that app. 
+> Therefore any apps running in docker need to talk to each other over the internal docker network, not localhost
+> this is why my maven project can connect to the exposed 8000 port of the dockerized dynamoDB-local, but the
+> dockerized app of the same project needs to connect over 'host.docker.internal:8000'
+
 `mvn clean package`
 `docker build -t petapp:local .`
 `docker run -d --name dynamodb-local -p 8000:8000 amazon/dynamodb-local`
