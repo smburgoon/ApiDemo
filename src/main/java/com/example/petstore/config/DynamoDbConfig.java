@@ -1,5 +1,6 @@
 package com.example.petstore.config;
 
+import com.example.petstore.repository.DynamoDBPetRepository;
 import com.example.petstore.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +23,6 @@ public class DynamoDbConfig {
     public DynamoDbClient dynamoDbClient() {
 
        return DynamoDbClient.builder()
-//                .endpointOverride(URI.create("http://dynamodb-local:8000"))
                 .endpointOverride(URI.create(dynamoDbEndpoint))
                 .httpClient(UrlConnectionHttpClient.builder().build())
                 .region(Region.US_WEST_2)
@@ -32,6 +32,6 @@ public class DynamoDbConfig {
 
     @Bean
     public PetRepository petRepository(DynamoDbClient client) {
-        return new PetRepository(client);
+        return new DynamoDBPetRepository(client);
     }
 }

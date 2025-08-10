@@ -1,2 +1,42 @@
 server:
   port: 8080
+
+
+spring:
+  profiles:
+    active: dynamo
+
+---
+
+# application.yml (default config)
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+---
+
+# application-sql.yml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/petdb
+    username: youruser
+    password: yourpass
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+---
+
+# application-dynamo.yml
+aws:
+  region: us-east-1
+  dynamodb:
+    table-name: pets
