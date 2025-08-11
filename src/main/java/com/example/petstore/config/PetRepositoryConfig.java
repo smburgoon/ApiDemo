@@ -1,6 +1,5 @@
 package com.example.petstore.config;
 
-import com.example.petstore.model.PetFactory;
 import com.example.petstore.repository.PetRepository;
 import com.example.petstore.repository.SqlPetRepository;
 import com.example.petstore.repository.DynamoDBPetRepository;

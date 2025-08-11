@@ -1,25 +1,16 @@
-package com.example.petstore.model.sql;
+package com.example.petstore.controller;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 import java.time.LocalDate;
 
-
-@Entity
-@Table(name = "pets")
-public class PetEntity {
-    @Id
+// DTO data transfer object
+public class PetRequest {
     private String id;
     private String name;
-    private String type; // "Dog", "Cat", etc.
+    private String type; // "Dog", "Cat"
     private LocalDate birthDate;
-
-    // Optional fields for subclasses
     private Boolean isTrained;
     private Boolean isIndoor;
-
     // Getters and setters
 
 

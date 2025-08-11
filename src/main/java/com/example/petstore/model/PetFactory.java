@@ -1,27 +1,32 @@
 package com.example.petstore.model;
 
-import java.time.LocalDate;
-import java.util.Map;
+import com.example.petstore.model.sql.PetEntity;
+import org.springframework.stereotype.Component;
 
-import static com.example.petstore.model.PetType.FISH;
+@Component
+public class PetFactory {
 
-public interface PetFactory {
-    Pet fromEntity(Object source);
-    Object toEntity(Pet pet, Class<?> targetType);
-
-    public static Pet createPet(PetType type, String id, String name, LocalDate birthDate, Map<String, Object> attributes) {
-        switch (type) {
-            case DOG:
-                return new Dog(id, name, birthDate, (boolean) attributes.getOrDefault("isTrained", false));
-            case CAT:
-                return new Cat(id, name, birthDate, (boolean) attributes.getOrDefault("isIndoor", true));
-            case FISH:
-                return new Fish(id, name, birthDate, (boolean) attributes.getOrDefault("isSaltWater", false));
-            case FOX:
-                return new Fox(id, name, birthDate, (boolean) attributes.getOrDefault("isIndoor", true));
-            default:
-                throw new IllegalArgumentException("Unsupported pet type: " + type);
-        }
+    public Pet fromEntity(PetEntity entity) {
+        return switch (entity.getType()) {
+            case "Dog" -> new Dog(entity.getId(), entity.getName(), entity.getBirthDate(), entity.getIsTrained());
+            case "Cat" -> new Cat(entity.getId(), entity.getName(), entity.getBirthDate(), entity.getIsIndoor());
+            default -> throw new IllegalArgumentException("Unknown pet type: " + entity.getType());
+        };
     }
 
+    public PetEntity toEntity(Pet pet) {
+        PetEntity entity = new PetEntity();
+        entity.setId(pet.getId());
+        entity.setName(pet.getName());
+        entity.setBirthDate(pet.getBirthDate());
+        entity.setType(pet.getType());
+
+        if (pet instanceof Dog dog) {
+            entity.setIsTrained(dog.isTrained());
+        } else if (pet instanceof Cat cat) {
+            entity.setIsIndoor(cat.isIndoor());
+        }
+
+        return entity;
+    }
 }
