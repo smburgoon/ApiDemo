@@ -4,18 +4,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "pets")
 public class PetEntity {
     @Id
     private String id;
-
     private String name;
     private String type;
+    private LocalDate birthDate;
 
     // Getters and setters
-
-
     public String getId() {
         return id;
     }
@@ -38,5 +38,12 @@ public class PetEntity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 }

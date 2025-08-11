@@ -1,8 +1,10 @@
 package com.example.petstore.repository;
 
 import com.example.petstore.model.Pet;
+import com.example.petstore.model.PetFactory;
 import com.example.petstore.model.sql.PetEntity;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,9 +16,11 @@ import java.util.stream.Collectors;
 public class SqlPetRepository implements PetRepository {
 
     private final JpaPetRepository jpaRepo;
+    private final PetFactory petFactory;
 
-    public SqlPetRepository(JpaPetRepository jpaRepo) {
+    public SqlPetRepository(JpaRepository<PetEntity, String> jpaRepo, PetFactory petFactory) {
         this.jpaRepo = jpaRepo;
+        this.petFactory = petFactory;
     }
 
     @Override

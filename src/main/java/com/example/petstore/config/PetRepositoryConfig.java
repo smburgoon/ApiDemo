@@ -1,5 +1,6 @@
 package com.example.petstore.config;
 
+import com.example.petstore.model.PetFactory;
 import com.example.petstore.repository.PetRepository;
 import com.example.petstore.repository.SqlPetRepository;
 import com.example.petstore.repository.DynamoDBPetRepository;
@@ -14,9 +15,15 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 @Configuration
 public class PetRepositoryConfig {
     private static final Logger log = LoggerFactory.getLogger(PetRepositoryConfig.class);
+    private final PetFactory petFactory;
 
     @Autowired
     private Environment env;
+
+    public PetRepositoryConfig(PetFactory petFactory) {
+        this.petFactory = petFactory;
+    }
+
 
     @Bean
     @Primary
@@ -28,7 +35,7 @@ public class PetRepositoryConfig {
         log.info("Active profile: {}", profile);
 
         if (profile.contains("sql")) {
-            return new SqlPetRepository(jpaRepo);
+            return new SqlPetRepository(jpaRepo, petFactory);
         } else if (profile.contains("dynamo")) {
             return new DynamoDBPetRepository(dynamoClient);
         } else {

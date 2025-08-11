@@ -4,7 +4,6 @@ import com.example.petstore.model.Pet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.example.petstore.model.DynamoDBPet;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;

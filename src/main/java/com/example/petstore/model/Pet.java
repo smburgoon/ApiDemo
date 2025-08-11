@@ -2,18 +2,27 @@ package com.example.petstore.model;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class Pet {
+import java.time.LocalDate;
+
+public abstract class Pet {
     private String id;
-    @NotBlank
     private String name;
-    private String type;
+    protected LocalDate birthDate;
 
     public Pet() {}
 
-    public Pet(String id, String name, String type) {
+    public Pet(String id, String name, LocalDate birthDate) {
         this.id = id;
         this.name = name;
-        this.type = type;
+        this.birthDate = birthDate;
+    }
+
+    public abstract String speak();
+
+    public abstract String getType();
+
+    public int getAge() {
+        return LocalDate.now().getYear() - birthDate.getYear();
     }
 
     // Getters and setters
@@ -22,7 +31,4 @@ public class Pet {
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-
-    public String getType() { return type; }
-    public void setType(String type) { this.type = type; }
 }
